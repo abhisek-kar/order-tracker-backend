@@ -1,0 +1,43 @@
+import mongoose, { Schema, Model } from "mongoose";
+import { IOrder } from "../interfaces/IOrder";
+
+const OrderSchema: Schema = new Schema(
+  {
+    taskId: { type: String, required: true, unique: true },
+    customerInfo: {
+      name: { type: String, required: true },
+      address: { type: String, required: true },
+      phone: { type: String, required: true },
+    },
+    deliveryItem: { type: String, required: true },
+    preferredTime: { type: String, required: true },
+    status: {
+      type: String,
+      required: true,
+      enum: [
+        "Scheduled",
+        "Reached Store",
+        "Picked Up",
+        "Out for Delivery",
+        "Delivered",
+      ],
+      default: "Scheduled",
+    },
+    agentInfo: {
+      name: { type: String },
+      phone: { type: String },
+    },
+    location: {
+      latitude: { type: Number },
+      longitude: { type: Number },
+    },
+    eta: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Order: Model<IOrder> = mongoose.model<IOrder>("Order", OrderSchema);
+
+export default Order;
