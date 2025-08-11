@@ -25,7 +25,7 @@ app.use("/api/v1", v1Routes);
 app.use(errorHandler);
 
 // Start the server
-app.listen(appEnv.PORT, () => {
+httpServer.listen(appEnv.PORT, () => {
   console.log(`Server is running on http://localhost:${appEnv.PORT}`);
   connectDB();
   seedDB();
