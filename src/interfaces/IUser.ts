@@ -7,4 +7,5 @@ export interface IUser extends Document {
   name: string;
   password?: string;
   role: IUserRole;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
