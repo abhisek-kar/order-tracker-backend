@@ -6,6 +6,7 @@ import v1Routes from "./routes/v1/index";
 import { errorHandler } from "./middlewares/errorHandler";
 import { createServer } from "http";
 import { initializeSocketIo } from "./services/websocketService";
+import seedDB from "./seeder";
 
 const app = express();
 const httpServer = createServer(app);
@@ -27,4 +28,5 @@ app.use(errorHandler);
 app.listen(appEnv.PORT, () => {
   console.log(`Server is running on http://localhost:${appEnv.PORT}`);
   connectDB();
+  seedDB();
 });
