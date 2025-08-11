@@ -4,8 +4,14 @@ import appEnv from "./config/env";
 import connectDB from "./config/dbConfig";
 import v1Routes from "./routes/v1/index";
 import { errorHandler } from "./middlewares/errorHandler";
+import { createServer } from "http";
+import { initializeSocketIo } from "./services/websocketService";
 
 const app = express();
+const httpServer = createServer(app);
+
+// Initialize Socket.io
+initializeSocketIo(httpServer);
 
 // Middleware
 app.use(express.json());

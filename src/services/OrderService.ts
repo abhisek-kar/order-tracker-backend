@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import Order from "../models/Order";
 import { IOrder } from "../interfaces/IOrder";
 import logger from "../utils/logger";
+import { emitOrderUpdate } from "./websocketService";
 
 export const createOrder = async (
   customerInfo: IOrder["customerInfo"],
@@ -55,6 +56,9 @@ export const updateOrderStatus = async (
       { status },
       { new: true }
     );
+    if (updatedOrder) {
+      emitOrderUpdate(updatedOrder);
+    }
     return updatedOrder;
   } catch (error) {
     logger.error("Error updating order status:", error);
@@ -72,6 +76,9 @@ export const updateOrderLocation = async (
       { location },
       { new: true }
     );
+    if (updatedOrder) {
+      emitOrderUpdate(updatedOrder);
+    }
     return updatedOrder;
   } catch (error) {
     logger.error("Error updating order location:", error);
