@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import Order from "../models/Order";
 import { IOrder } from "../interfaces/IOrder";
+import logger from "../utils/logger";
 
 export const createOrder = async (
   customerInfo: IOrder["customerInfo"],
@@ -19,7 +20,7 @@ export const createOrder = async (
     const savedOrder = await newOrder.save();
     return savedOrder.taskId;
   } catch (error) {
-    console.error("Error creating order:", error);
+    logger.error("Error creating order:", error);
     throw new Error("Failed to create order");
   }
 };
@@ -29,7 +30,7 @@ export const getAllOrders = async (): Promise<IOrder[]> => {
     const orders = await Order.find().sort({ createdAt: -1 });
     return orders;
   } catch (error) {
-    console.error("Error retrieving orders:", error);
+    logger.error("Error retrieving orders:", error);
     throw new Error("Failed to retrieve orders");
   }
 };
@@ -39,7 +40,7 @@ export const getOrderById = async (taskId: string): Promise<IOrder | null> => {
     const order = await Order.findOne({ taskId });
     return order;
   } catch (error) {
-    console.error("Error retrieving order by ID:", error);
+    logger.error("Error retrieving order by ID:", error);
     throw new Error("Failed to retrieve order");
   }
 };
@@ -52,11 +53,11 @@ export const updateOrderStatus = async (
     const updatedOrder = await Order.findOneAndUpdate(
       { taskId },
       { status },
-      { new: true } // returns the updated document
+      { new: true }
     );
     return updatedOrder;
   } catch (error) {
-    console.error("Error updating order status:", error);
+    logger.error("Error updating order status:", error);
     throw new Error("Failed to update order status");
   }
 };
@@ -73,7 +74,7 @@ export const updateOrderLocation = async (
     );
     return updatedOrder;
   } catch (error) {
-    console.error("Error updating order location:", error);
+    logger.error("Error updating order location:", error);
     throw new Error("Failed to update order location");
   }
 };
