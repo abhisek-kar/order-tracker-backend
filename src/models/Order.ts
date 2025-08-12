@@ -8,6 +8,8 @@ const OrderSchema: Schema = new Schema(
       name: { type: String, required: true },
       address: { type: String, required: true },
       phone: { type: String, required: true },
+      latitude: { type: Number, required: true },
+      longitude: { type: Number, required: true },
     },
     deliveryItem: { type: String, required: true },
     preferredTime: { type: String, required: true },

@@ -13,6 +13,8 @@ export interface IOrder extends Document {
   customerInfo: {
     name: string;
     address: string;
+    latitude: number;
+    longitude: number;
     phone: string;
   };
   deliveryItem: string;
