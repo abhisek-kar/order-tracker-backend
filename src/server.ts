@@ -8,6 +8,8 @@ import { createServer } from "http";
 import { initializeSocketIo } from "./services/websocketService";
 import seedDB from "./seeder";
 import { notFoundHandler } from "./middlewares/notFoundHandler";
+import { initializeRedis } from "./config/redisConfig";
+import { initializeEmailWorker } from "./workers/emailWorker";
 
 const app = express();
 const httpServer = createServer(app);
@@ -33,4 +35,6 @@ httpServer.listen(appEnv.PORT, () => {
   console.log(`Server is running on http://localhost:${appEnv.PORT}`);
   connectDB();
   seedDB();
+  initializeRedis();
+  initializeEmailWorker();
 });

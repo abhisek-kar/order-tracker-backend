@@ -6,8 +6,9 @@ const OrderSchema: Schema = new Schema(
     taskId: { type: String, required: true, unique: true },
     customerInfo: {
       name: { type: String, required: true },
-      address: { type: String, required: true },
+      email: { type: String, required: true, trim: true, lowercase: true },
       phone: { type: String, required: true },
+      address: { type: String, required: true },
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
     },

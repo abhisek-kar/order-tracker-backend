@@ -12,10 +12,11 @@ export interface IOrder extends Document {
   taskId: string;
   customerInfo: {
     name: string;
+    email: string;
+    phone: string;
     address: string;
     latitude: number;
     longitude: number;
-    phone: string;
   };
   deliveryItem: string;
   preferredTime: string;

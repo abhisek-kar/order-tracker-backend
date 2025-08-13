@@ -21,6 +21,14 @@ const envSchema = z.object({
     .min(1, { message: "JWT secret is required" })
     .optional(),
   JWT_EXPIRATION: z.string().default("1h"),
+  EMAIL_HOST: z.string().default("smtp.gmail.com"),
+  EMAIL_PORT: z.string().default("465"),
+  EMAIL_USER: z.string().email({ message: "Invalid email" }).optional(),
+  EMAIL_PASS: z.string().min(6).optional(),
+  EMAIL_FROM: z.string().optional(),
+  REDIS_URI: z.string().default("redis://localhost:6379"),
+  REDIS_HOST: z.string().default("127.0.0.1"),
+  REDIS_PORT: z.string().default("6379"),
 });
 
 const appEnv = envSchema.parse(process.env);

@@ -3,6 +3,7 @@ import Order from "../models/Order";
 import { IOrder } from "../interfaces/IOrder";
 import logger from "../utils/logger";
 import { emitOrderUpdate } from "./websocketService";
+import { addOrderEmail } from "../queues/emailQueue";
 
 export const createOrder = async (
   customerInfo: IOrder["customerInfo"],
@@ -19,6 +20,20 @@ export const createOrder = async (
     });
 
     const savedOrder = await newOrder.save();
+    await addOrderEmail(
+      customerInfo.email,
+      {
+        name: customerInfo.name,
+        orderId: savedOrder.taskId,
+        status: "Scheduled",
+        deliveryItem: deliveryItem,
+        preferredTime: preferredTime,
+        customerPhone: customerInfo.phone,
+        deliveryAddress: customerInfo.address,
+      },
+      true
+    );
+
     return savedOrder.taskId;
   } catch (error) {
     logger.error("Error creating order:", error);
@@ -58,7 +73,20 @@ export const updateOrderStatus = async (
     );
     if (updatedOrder) {
       emitOrderUpdate(updatedOrder);
+      await addOrderEmail(
+        updatedOrder.customerInfo.email,
+        {
+          name: updatedOrder.customerInfo.name,
+          orderId: updatedOrder.taskId,
+          status: status,
+          location: updatedOrder.location,
+        },
+        false
+      );
+    } else {
+      throw new Error("Order not found");
     }
+
     return updatedOrder;
   } catch (error) {
     logger.error("Error updating order status:", error);
