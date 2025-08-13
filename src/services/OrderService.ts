@@ -5,6 +5,26 @@ import logger from "../utils/logger";
 import { emitOrderUpdate } from "./websocketService";
 import { addOrderEmail } from "../queues/emailQueue";
 
+interface GetOrdersOptions {
+  page?: number;
+  limit?: number;
+  status?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+  search?: string;
+}
+
+interface PaginatedOrdersResponse {
+  orders: IOrder[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalOrders: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+  };
+}
+
 export const createOrder = async (
   customerInfo: IOrder["customerInfo"],
   deliveryItem: string,
@@ -41,10 +61,62 @@ export const createOrder = async (
   }
 };
 
-export const getAllOrders = async (): Promise<IOrder[]> => {
+export const getAllOrders = async (
+  options: GetOrdersOptions = {}
+): Promise<PaginatedOrdersResponse> => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 });
-    return orders;
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      sortBy = "createdAt",
+      sortOrder = "desc",
+      search,
+    } = options;
+
+    const filter: any = {};
+
+    if (status) {
+      filter.status = status;
+    }
+
+    if (search) {
+      filter.$or = [
+        { "customerInfo.name": { $regex: search, $options: "i" } },
+        { "customerInfo.email": { $regex: search, $options: "i" } },
+        { deliveryItem: { $regex: search, $options: "i" } },
+        { taskId: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const skip = (page - 1) * limit;
+
+    const sortObject: any = {};
+    sortObject[sortBy] = sortOrder === "asc" ? 1 : -1;
+
+    const [orders, totalOrders] = await Promise.all([
+      Order.find(filter).sort(sortObject).skip(skip).limit(limit).lean(),
+      Order.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.ceil(totalOrders / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    logger.info(
+      `Retrieved ${orders.length} orders (page ${page} of ${totalPages})`
+    );
+
+    return {
+      orders,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalOrders,
+        hasNextPage,
+        hasPrevPage,
+      },
+    };
   } catch (error) {
     logger.error("Error retrieving orders:", error);
     throw new Error("Failed to retrieve orders");
@@ -113,3 +185,8 @@ export const updateOrderLocation = async (
     throw new Error("Failed to update order location");
   }
 };
+
+
+
+
+

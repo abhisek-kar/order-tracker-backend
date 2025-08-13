@@ -12,13 +12,17 @@ export const login = async (
     if (!email || !password) {
       return res
         .status(400)
-        .json({ message: "Email and password are required" });
+        .json({ success: false, message: "Email and password are required" });
     }
 
     const { token, user } = await loginService(email, password);
 
-    res.status(200).json({ token, user });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: { token, user },
+    });
   } catch (error) {
-    res.status(401).json({ message: "Invalid credentials" });
+    res.status(401).json({ success: false, message: "Invalid credentials" });
   }
 };
