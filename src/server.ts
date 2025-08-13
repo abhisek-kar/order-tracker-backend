@@ -7,6 +7,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import { createServer } from "http";
 import { initializeSocketIo } from "./services/websocketService";
 import seedDB from "./seeder";
+import { notFoundHandler } from "./middlewares/notFoundHandler";
 
 const app = express();
 const httpServer = createServer(app);
@@ -20,6 +21,9 @@ app.use(cors());
 
 // routes
 app.use("/api/v1", v1Routes);
+
+// 404 handler
+app.use(notFoundHandler);
 
 // error handler
 app.use(errorHandler);
