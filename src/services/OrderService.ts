@@ -67,7 +67,7 @@ export const getAllOrders = async (
   try {
     const {
       page = 1,
-      limit = 10,
+      limit = 100,
       status,
       sortBy = "createdAt",
       sortOrder = "desc",
@@ -170,6 +170,7 @@ export const updateOrderLocation = async (
   taskId: string,
   location: IOrder["location"]
 ): Promise<IOrder | null> => {
+  console.log(`Updating location for order ${taskId} to`, location);
   try {
     const updatedOrder = await Order.findOneAndUpdate(
       { taskId },
@@ -185,8 +186,3 @@ export const updateOrderLocation = async (
     throw new Error("Failed to update order location");
   }
 };
-
-
-
-
-

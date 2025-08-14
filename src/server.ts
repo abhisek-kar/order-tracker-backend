@@ -10,6 +10,7 @@ import seedDB from "./seeder";
 import { notFoundHandler } from "./middlewares/notFoundHandler";
 import { initializeRedis } from "./config/redisConfig";
 import { initializeEmailWorker } from "./workers/emailWorker";
+import morgan from "morgan";
 
 const app = express();
 const httpServer = createServer(app);
@@ -20,6 +21,7 @@ initializeSocketIo(httpServer);
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 // routes
 app.use("/api/v1", v1Routes);

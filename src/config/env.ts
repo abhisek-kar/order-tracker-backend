@@ -20,7 +20,7 @@ const envSchema = z.object({
     .string()
     .min(1, { message: "JWT secret is required" })
     .optional(),
-  JWT_EXPIRATION: z.string().default("1h"),
+  JWT_EXPIRATION: z.string().default("100h"),
   EMAIL_HOST: z.string().default("smtp.gmail.com"),
   EMAIL_PORT: z.string().default("465"),
   EMAIL_USER: z.string().email({ message: "Invalid email" }).optional(),
@@ -29,6 +29,13 @@ const envSchema = z.object({
   REDIS_URI: z.string().default("redis://localhost:6379"),
   REDIS_HOST: z.string().default("127.0.0.1"),
   REDIS_PORT: z.string().default("6379"),
+
+  AGENT_EMAIL: z.string().email({ message: "Invalid agent email" }).optional(),
+  AGENT_PASSWORD: z
+    .string()
+    .min(6, { message: "Agent password must be at least 6 characters" })
+    .optional(),
+  AGENT_NAME: z.string().min(1, { message: "Agent name is required" }),
 });
 
 const appEnv = envSchema.parse(process.env);

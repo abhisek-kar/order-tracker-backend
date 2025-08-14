@@ -5,7 +5,7 @@ import logger from "./utils/logger";
 
 dotenv.config();
 
-const seedDB = async () => {
+const seedAdmin = async () => {
   try {
     const adminUserExists = await User.findOne({ role: "admin" });
     if (!adminUserExists) {
@@ -22,6 +22,29 @@ const seedDB = async () => {
   } catch (error) {
     logger.error("Error seeding the database:", error);
   }
+};
+
+const seedAgent = async () => {
+  try {
+    const agentUserExists = await User.findOne({ role: "agent" });
+    if (!agentUserExists) {
+      await User.create({
+        name: appEnv.AGENT_NAME || "Agent User",
+        email: appEnv.AGENT_EMAIL || "agent@tracker.com",
+        password: appEnv.AGENT_PASSWORD || "Agent@123",
+        role: "agent",
+      });
+      logger.info("Agent user created successfully!");
+    } else {
+      logger.info("Agent user already exists.");
+    }
+  } catch (error) {
+    logger.error("Error seeding the database:", error);
+  }
+};
+const seedDB = async () => {
+  await seedAdmin();
+  await seedAgent();
 };
 
 export default seedDB;

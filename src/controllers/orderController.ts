@@ -212,6 +212,8 @@ export const updateOrderLocation = async (
     const { id } = req.params;
     const { location } = req.body;
 
+    console.log(`Updating location for order ${id} to`, location);
+
     if (
       !location ||
       typeof location.latitude !== "number" ||

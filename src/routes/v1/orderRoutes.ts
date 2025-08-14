@@ -20,12 +20,12 @@ router.get("/:id", getOrderById);
 // Admin-protected routes
 
 // GET /orders -> Get all tasks or orders
-router.get("/", auth, getAllOrders);
+router.get("/", auth("admin", "agent"), getAllOrders);
 
 // PATCH /orders/:id/status -> Update task stage
-router.patch("/:id/status", auth, updateOrderStatus);
+router.patch("/:id/status", auth("admin", "agent"), updateOrderStatus);
 
 // PATCH /orders/:id/location -> Update task location
-router.patch("/:id/location", auth, updateOrderLocation);
+router.patch("/:id/location", auth("admin", "agent"), updateOrderLocation);
 
 export default router;
