@@ -5,8 +5,8 @@ import {
   getOrderById as getOrderByIdService,
   updateOrderStatus as updateOrderStatusService,
   updateOrderLocation as updateOrderLocationService,
-} from "@/services/orderService";
-import { IOrder } from "@/interfaces/IOrder";
+} from "../services/orderService";
+import { IOrder } from "../interfaces/IOrder";
 
 export const createOrder = async (
   req: Request,

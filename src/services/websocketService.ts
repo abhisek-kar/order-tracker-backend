@@ -1,12 +1,12 @@
-import { Server as SocketIoServer } from "socket.io";
+import { Server as SocketIOServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import { IOrder } from "@/interfaces/IOrder";
-import logger from "@/utils/logger";
+import { IOrder } from "../interfaces/IOrder";
+import logger from "../utils/logger";
 
-let io: SocketIoServer;
+let io: SocketIOServer;
 
 export const initializeSocketIo = (httpServer: HttpServer) => {
-  io = new SocketIoServer(httpServer, {
+  io = new SocketIOServer(httpServer, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],

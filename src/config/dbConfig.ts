@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import logger from "@/utils/logger";
-import appEnv from "@/config/env";
+import logger from "../utils/logger";
+import appEnv from "./env";
 
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1) {

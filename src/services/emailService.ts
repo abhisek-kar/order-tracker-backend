@@ -1,7 +1,7 @@
 import { SendMailOptions } from "nodemailer";
-import transporter from "@/config/emailConfig";
-import logger from "@/utils/logger";
-import appEnv from "@/config/env";
+import transporter from "../config/emailConfig";
+import logger from "../utils/logger";
+import appEnv from "../config/env";
 
 interface EmailContext {
   name: string;

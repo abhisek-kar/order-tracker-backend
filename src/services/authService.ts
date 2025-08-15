@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
-import User from "@/models/User";
-import appEnv from "@/config/env";
+import bcrypt from "bcrypt";
+import User from "../models/User";
+import appEnv from "../config/env";
 
 export const login = async (email: string, password: string) => {
   const user = await User.findOne({ email });
