@@ -7,7 +7,6 @@ import {
   updateOrderLocation as updateOrderLocationService,
 } from "../services/orderService.js";
 import { IOrder } from "../interfaces/IOrder.js";
-import { success } from "zod";
 
 export const createOrder = async (
   req: Request,
