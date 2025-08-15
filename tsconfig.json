@@ -18,9 +18,15 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "module": "ESNext"
     }
   },
   "include": ["src/**/*"],
