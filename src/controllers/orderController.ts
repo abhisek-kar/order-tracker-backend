@@ -8,7 +8,6 @@ import {
 } from "../services/orderService.js";
 import { IOrder } from "../interfaces/IOrder.js";
 import { success } from "zod";
-import { AuthRequest } from "../middlewares/authMiddleware.js";
 
 export const createOrder = async (
   req: Request,
@@ -43,7 +42,7 @@ export const createOrder = async (
 };
 
 export const getAllOrders = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {

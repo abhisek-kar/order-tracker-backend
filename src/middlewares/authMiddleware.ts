@@ -2,16 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import appEnv from "../config/env.js";
 
-export interface AuthRequest extends Request {
-  user?: {
-    id: string;
-    role: "admin" | "agent" | "customer";
-  };
-}
 
 export const auth =
   (...roles: Array<"admin" | "agent" | "customer">) =>
-  (req: AuthRequest, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
