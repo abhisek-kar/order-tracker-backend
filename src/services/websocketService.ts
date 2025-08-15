@@ -1,7 +1,7 @@
 import { Server as SocketIoServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import { IOrder } from "../interfaces/IOrder.js";
-import logger from "../utils/logger.js";
+import { IOrder } from "@/interfaces/IOrder.js";
+import logger from "@/utils/logger.js";
 
 let io: SocketIoServer;
 

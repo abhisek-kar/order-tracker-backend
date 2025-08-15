@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import appEnv from "../config/env.js";
+import appEnv from "@/config/env.js";
 
 
 export const auth =

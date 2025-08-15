@@ -1,7 +1,7 @@
 import { Worker, Job } from "bullmq";
-import emailService from "../services/emailService.js";
-import logger from "../utils/logger.js";
-import { redisClient, initializeRedis } from "../config/redisConfig.js";
+import emailService from "@/services/emailService.js";
+import logger from "@/utils/logger.js";
+import { redisClient, initializeRedis } from "@/config/redisConfig.js";
 
 interface EmailJobData {
   type: "orderEmail";

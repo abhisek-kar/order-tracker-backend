@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-import User from "./models/User.js";
-import appEnv from "./config/env.js";
-import logger from "./utils/logger.js";
+import User from "@/models/User.js";
+import appEnv from "@/config/env.js";
+import logger from "@/utils/logger.js";
 
 dotenv.config();
 

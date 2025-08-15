@@ -1,5 +1,5 @@
 import winston from "winston";
-import appEnv from "../config/env.js";
+import appEnv from "@/config/env.js";
 
 const logger = winston.createLogger({
   level: "info",
