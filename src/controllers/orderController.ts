@@ -8,6 +8,7 @@ import {
 } from "../services/orderService";
 import { IOrder } from "../interfaces/IOrder";
 import { success } from "zod";
+import { AuthRequest } from "../middlewares/authMiddleware";
 
 export const createOrder = async (
   req: Request,
@@ -42,7 +43,7 @@ export const createOrder = async (
 };
 
 export const getAllOrders = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -119,6 +120,7 @@ export const getAllOrders = async (
       sortBy: sortBy as string,
       sortOrder: sortOrder as "asc" | "desc",
       search: search as string,
+      userRole: req.user?.role,
     });
 
     res.status(200).json({
@@ -210,9 +212,8 @@ export const updateOrderLocation = async (
 ) => {
   try {
     const { id } = req.params;
-    const { location } = req.body;
+    const {      location } = req.body;
 
-    console.log(`Updating location for order ${id} to`, location);
 
     if (
       !location ||

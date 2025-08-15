@@ -12,6 +12,7 @@ interface GetOrdersOptions {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   search?: string;
+  userRole?: "admin" | "agent" | "customer";
 }
 
 interface PaginatedOrdersResponse {
@@ -75,6 +76,13 @@ export const getAllOrders = async (
     } = options;
 
     const filter: any = {};
+
+    // if user role is agent show only out for pickup and out for delivery orders
+    if (options.userRole === "agent") {
+      filter.status = {
+        $in: ["Out for Delivery", "Picked Up"],
+      };
+    }
 
     if (status) {
       filter.status = status;
