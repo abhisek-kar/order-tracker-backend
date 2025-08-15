@@ -2,13 +2,13 @@
   "name": "order-tracker-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "postbuild": "cp -r src/views dist/"
+    "postbuild": "mkdir -p dist/views && cp -r src/views/* dist/views/ 2>/dev/null || true"
   },
   "repository": {
     "type": "git",
