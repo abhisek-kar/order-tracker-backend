@@ -5,7 +5,7 @@ import {
   getOrderById as getOrderByIdService,
   updateOrderStatus as updateOrderStatusService,
   updateOrderLocation as updateOrderLocationService,
-} from "../services/orderService.js";
+} from "@/services/orderService.js";
 import { IOrder } from "../interfaces/IOrder.js";
 
 export const createOrder = async (
