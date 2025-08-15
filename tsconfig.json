@@ -16,14 +16,12 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 
     "strict": true /* Enable all strict type-checking options. */ /* i enabled this*/,
-    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */ /* i enabled this*/,
-    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */ /* i enabled this*/,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "noImplicitAny": false /* Enable error reporting for expressions and declarations with an implied 'any' type. */ /* i enabled this*/,
+    "skipLibCheck": true ,/* Skip type checking all .d.ts files. */
+    "allowJs": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "client"],
   "baseUrl": "./src" /* This is the base directory to resolve non-relative module names. */,
-  "paths": {
-    "@/*": ["./*"] /* This is the path mapping for the baseUrl. */
-  }
+
 }
