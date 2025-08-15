@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import Order from "@/models/Order.js";
-import { IOrder } from "@/interfaces/IOrder.js";
-import logger from "@/utils/logger.js";
-import { emitOrderUpdate } from "@/services/websocketService.js";
-import { addOrderEmail } from "@/queues/emailQueue.js";
+import Order from "@/models/Order";
+import { IOrder } from "@/interfaces/IOrder";
+import logger from "@/utils/logger";
+import { emitOrderUpdate } from "@/services/websocketService";
+import { addOrderEmail } from "@/queues/emailQueue";
 
 interface GetOrdersOptions {
   page?: number;

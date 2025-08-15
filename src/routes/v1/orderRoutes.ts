@@ -5,8 +5,8 @@ import {
   getOrderById,
   updateOrderStatus,
   updateOrderLocation,
-} from "@/controllers/orderController.js";
-import { auth } from "@/middlewares/authMiddleware.js";
+} from "@/controllers/orderController";
+import { auth } from "@/middlewares/authMiddleware";
 
 const router = Router();
 // Public routes
