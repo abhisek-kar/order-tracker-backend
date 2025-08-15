@@ -1,15 +1,15 @@
 import express from "express";
 import cors from "cors";
 import appEnv from "./config/env";
-import connectDB from "./config/dbConfig";
-import v1Routes from "./routes/v1/index";
-import { errorHandler } from "./middlewares/errorHandler";
+import connectDB from "./config/dbConfig.js";
+import v1Routes from "./routes/v1/index.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 import { createServer } from "http";
-import { initializeSocketIo } from "./services/websocketService";
+import { initializeSocketIo } from "./services/websocketService.js";
 import seedDB from "./seeder";
-import { notFoundHandler } from "./middlewares/notFoundHandler";
-import { initializeRedis } from "./config/redisConfig";
-import { initializeEmailWorker } from "./workers/emailWorker";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import { initializeRedis } from "./config/redisConfig.js";
+import { initializeEmailWorker } from "./workers/emailWorker.js";
 import morgan from "morgan";
 
 const app = express();

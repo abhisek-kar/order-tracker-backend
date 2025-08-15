@@ -5,10 +5,10 @@ import {
   getOrderById as getOrderByIdService,
   updateOrderStatus as updateOrderStatusService,
   updateOrderLocation as updateOrderLocationService,
-} from "../services/orderService";
-import { IOrder } from "../interfaces/IOrder";
+} from "../services/orderService.js";
+import { IOrder } from "../interfaces/IOrder.js";
 import { success } from "zod";
-import { AuthRequest } from "../middlewares/authMiddleware";
+import { AuthRequest } from "../middlewares/authMiddleware.js";
 
 export const createOrder = async (
   req: Request,
@@ -212,8 +212,7 @@ export const updateOrderLocation = async (
 ) => {
   try {
     const { id } = req.params;
-    const {      location } = req.body;
-
+    const { location } = req.body;
 
     if (
       !location ||
