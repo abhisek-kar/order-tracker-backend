@@ -1,8 +1,8 @@
-import Redis from "ioredis";
+import { Redis } from "ioredis";
 import appEnv from "./env.js";
 import logger from "../utils/logger.js";
 
-export let redisClient!: Redis;
+export let redisClient: any;
 
 export function initializeRedis() {
   if (!redisClient) {
@@ -12,7 +12,7 @@ export function initializeRedis() {
       maxRetriesPerRequest: null,
       enableReadyCheck: false,
       lazyConnect: true,
-      connectTimeout: 10000, 
+      connectTimeout: 10000,
       commandTimeout: 10000,
     });
 
@@ -20,7 +20,7 @@ export function initializeRedis() {
       logger.info("Redis connected successfully");
     });
 
-    redisClient.on("error", (err) => {
+    redisClient.on("error", (err: any) => {
       logger.error("Redis connection error:", err);
     });
   }
