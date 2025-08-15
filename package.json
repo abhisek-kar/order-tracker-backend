@@ -4,7 +4,7 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "build": "echo 'TypeScript version:' && npx tsc --version && echo 'Starting build...' && tsc && tsc-alias",
+    "build": "echo 'Checking npm packages...' && npm ls typescript tsc-alias && echo 'Starting TypeScript build...' && npx tsc && echo 'Running tsc-alias...' && npx tsc-alias",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "postbuild": "mkdir -p dist/views && cp -r src/views/* dist/views/ 2>/dev/null || true"
