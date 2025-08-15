@@ -21,7 +21,7 @@ initializeSocketIo(httpServer);
 // Middleware
 app.use(express.json());
 app.use(cors());
-app.use(morgan("dev"));
+app.use(morgan(appEnv.NODE_ENV === "production" ? "combined" : "dev"));
 
 // routes
 app.use("/api/v1", v1Routes);
@@ -34,7 +34,7 @@ app.use(errorHandler);
 
 // Start the server
 httpServer.listen(appEnv.PORT, () => {
-  console.log(`Server is running on http://localhost:${appEnv.PORT}`);
+  console.log(`Server is running `);
   connectDB();
   seedDB();
   initializeRedis();
