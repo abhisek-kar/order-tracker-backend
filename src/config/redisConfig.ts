@@ -11,6 +11,9 @@ export function initializeRedis() {
       port: appEnv.REDIS_PORT ? parseInt(appEnv.REDIS_PORT, 10) : 6379,
       maxRetriesPerRequest: null,
       enableReadyCheck: false,
+      lazyConnect: true,
+      connectTimeout: 10000, 
+      commandTimeout: 10000,
     });
 
     redisClient.on("connect", () => {
