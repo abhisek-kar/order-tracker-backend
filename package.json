@@ -8,7 +8,11 @@
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "copy-views": "mkdir -p dist/views && cp -r src/views/* dist/views/ 2>/dev/null || true",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "docker:build": "docker build -t order-tracker-backend .",
+    "docker:run": "docker run -p 5000:5000 --env-file .env order-tracker-backend",
+    "docker:dev": "docker-compose up --build",
+    "docker:cloud": "docker-compose -f docker-compose.cloud.yml up --build"
   },
   "repository": {
     "type": "git",

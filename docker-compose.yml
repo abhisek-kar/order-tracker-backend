@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      # Your MongoDB Atlas URI (add to .env or environment variables)
+      # - MONGO_URI=${MONGO_URI}
+      # 
+      # Redis configuration (uncomment if using local Redis)
+      # - REDIS_HOST=redis
+      # - REDIS_PORT=6379
+      # 
+      # Or use cloud Redis (uncomment and add your Redis cloud URI)
+      # - REDIS_URI=${REDIS_URI}
+    # Only depend on Redis if using local Redis
+    # depends_on:
+    #   - redis
+    networks:
+      - app-network
+
+  # Uncomment if you want to use local Redis for development
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   networks:
+  #     - app-network
+
+volumes:
+  # Only needed if using local Redis
+  # redis-data:
+
+networks:
+  app-network:
+    driver: bridge
