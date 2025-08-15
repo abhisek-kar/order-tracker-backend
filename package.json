@@ -36,7 +36,9 @@
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "zod": "^4.0.17",
-    "zod-validation-error": "^4.0.1"
+    "zod-validation-error": "^4.0.1",
+    "typescript": "^5.9.2",
+    "tsc-alias": "^1.8.16"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -51,11 +53,9 @@
     "@types/socket.io": "^3.0.1",
     "@types/uuid": "^10.0.0",
     "nodemon": "^3.1.10",
-    "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.5.0",
-    "tsx": "^4.20.4",
-    "typescript": "^5.9.2"
+    "tsx": "^4.20.4"
   },
   "engines": {
     "node": "24.1.0"
