@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import User from "../models/User";
-import appEnv from "../config/env";
+import User from "../models/User.js";
+import appEnv from "../config/env.js";
 
-export const login = async (email: string, password: string) => {
+export const login = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new Error("Invalid credentials");
@@ -16,8 +16,8 @@ export const login = async (email: string, password: string) => {
 
   const token = jwt.sign(
     { id: user._id, role: user.role },
-    appEnv.JWT_SECRET as string,
-    { expiresIn: appEnv.JWT_EXPIRATION as any }
+    appEnv.JWT_SECRET,
+    { expiresIn: appEnv.JWT_EXPIRATION }
   );
 
   return {

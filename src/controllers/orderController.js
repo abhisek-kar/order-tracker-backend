@@ -1,20 +1,14 @@
-import { NextFunction, Request, Response } from "express";
 import {
   createOrder as createOrderService,
   getAllOrders as getAllOrdersService,
   getOrderById as getOrderByIdService,
   updateOrderStatus as updateOrderStatusService,
   updateOrderLocation as updateOrderLocationService,
-} from "../services/orderService";
-import { IOrder } from "../interfaces/IOrder";
+} from "../services/orderService.js";
 
-export const createOrder = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createOrder = async (req, res, next) => {
   try {
-    const { customerInfo, deliveryItem, preferredTime } = req.body as IOrder;
+    const { customerInfo, deliveryItem, preferredTime } = req.body;
 
     if (!customerInfo || !deliveryItem || !preferredTime) {
       return res
@@ -40,11 +34,7 @@ export const createOrder = async (
   }
 };
 
-export const getAllOrders = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getAllOrders = async (req, res, next) => {
   try {
     const {
       page = 1,
@@ -55,8 +45,8 @@ export const getAllOrders = async (
       search,
     } = req.query;
 
-    const pageNum = parseInt(page as string, 10);
-    const limitNum = parseInt(limit as string, 10);
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
 
     if (pageNum < 1) {
       return res.status(400).json({
@@ -79,7 +69,7 @@ export const getAllOrders = async (
       "customerInfo.name",
       "preferredTime",
     ];
-    if (sortBy && !validSortFields.includes(sortBy as string)) {
+    if (sortBy && !validSortFields.includes(sortBy)) {
       return res.status(400).json({
         message: "Invalid sort field",
         validFields: validSortFields,
@@ -87,7 +77,7 @@ export const getAllOrders = async (
     }
 
     const validSortOrders = ["asc", "desc"];
-    if (sortOrder && !validSortOrders.includes(sortOrder as string)) {
+    if (sortOrder && !validSortOrders.includes(sortOrder)) {
       return res.status(400).json({
         success: false,
         message: "Invalid sort order",
@@ -103,7 +93,7 @@ export const getAllOrders = async (
       "Delivered",
     ];
 
-    if (status && !validStatuses.includes(status as string)) {
+    if (status && !validStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
         message: "Invalid status",
@@ -114,10 +104,10 @@ export const getAllOrders = async (
     const result = await getAllOrdersService({
       page: pageNum,
       limit: limitNum,
-      status: status as string,
-      sortBy: sortBy as string,
-      sortOrder: sortOrder as "asc" | "desc",
-      search: search as string,
+      status: status,
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+      search: search,
       userRole: req.user?.role,
     });
 
@@ -137,11 +127,7 @@ export const getAllOrders = async (
   }
 };
 
-export const getOrderById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getOrderById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const order = await getOrderByIdService(id);
@@ -163,11 +149,7 @@ export const getOrderById = async (
   }
 };
 
-export const updateOrderStatus = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateOrderStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -203,11 +185,7 @@ export const updateOrderStatus = async (
   }
 };
 
-export const updateOrderLocation = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateOrderLocation = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { location } = req.body;

@@ -1,11 +1,10 @@
 import { Server as SocketIOServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import { IOrder } from "../interfaces/IOrder";
-import logger from "../utils/logger";
+import logger from "../utils/logger.js";
 
-let io: SocketIOServer;
+let io;
 
-export const initializeSocketIo = (httpServer: HttpServer) => {
+export const initializeSocketIo = (httpServer) => {
   io = new SocketIOServer(httpServer, {
     cors: {
       origin: "*",
@@ -16,7 +15,7 @@ export const initializeSocketIo = (httpServer: HttpServer) => {
   io.on("connection", (socket) => {
     logger.info(`User connected: ${socket.id}`);
 
-    socket.on("joinOrderRoom", (taskId: string) => {
+    socket.on("joinOrderRoom", (taskId) => {
       socket.join(taskId);
       logger.info(`User ${socket.id} joined room for taskId: ${taskId}`);
     });
@@ -27,7 +26,7 @@ export const initializeSocketIo = (httpServer: HttpServer) => {
   });
 };
 
-export const emitOrderUpdate = (order: IOrder) => {
+export const emitOrderUpdate = (order) => {
   if (io) {
     io.to(order.taskId).emit("orderUpdate", order);
   }

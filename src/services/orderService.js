@@ -1,36 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import Order from "../models/Order";
-import { IOrder } from "../interfaces/IOrder";
-import logger from "../utils/logger";
-import { emitOrderUpdate } from "./websocketService";
-import { addOrderEmail } from "../queues/emailQueue";
-
-interface GetOrdersOptions {
-  page?: number;
-  limit?: number;
-  status?: string;
-  sortBy?: string;
-  sortOrder?: "asc" | "desc";
-  search?: string;
-  userRole?: "admin" | "agent" | "customer";
-}
-
-interface PaginatedOrdersResponse {
-  orders: IOrder[];
-  pagination: {
-    currentPage: number;
-    totalPages: number;
-    totalOrders: number;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
-  };
-}
+import Order from "../models/Order.js";
+import logger from "../utils/logger.js";
+import { emitOrderUpdate } from "./websocketService.js";
+import { addOrderEmail } from "../queues/emailQueue.js";
 
 export const createOrder = async (
-  customerInfo: IOrder["customerInfo"],
-  deliveryItem: string,
-  preferredTime: string
-): Promise<string> => {
+  customerInfo,
+  deliveryItem,
+  preferredTime
+) => {
   try {
     const newOrder = new Order({
       taskId: uuidv4(),
@@ -62,9 +40,7 @@ export const createOrder = async (
   }
 };
 
-export const getAllOrders = async (
-  options: GetOrdersOptions = {}
-): Promise<PaginatedOrdersResponse> => {
+export const getAllOrders = async (options = {}) => {
   try {
     const {
       page = 1,
@@ -75,7 +51,7 @@ export const getAllOrders = async (
       search,
     } = options;
 
-    const filter: any = {};
+    const filter = {};
 
     // if user role is agent show only out for pickup and out for delivery orders
     if (options.userRole === "agent") {
@@ -99,7 +75,7 @@ export const getAllOrders = async (
 
     const skip = (page - 1) * limit;
 
-    const sortObject: any = {};
+    const sortObject = {};
     sortObject[sortBy] = sortOrder === "asc" ? 1 : -1;
 
     const [orders, totalOrders] = await Promise.all([
@@ -131,7 +107,7 @@ export const getAllOrders = async (
   }
 };
 
-export const getOrderById = async (taskId: string): Promise<IOrder | null> => {
+export const getOrderById = async (taskId) => {
   try {
     const order = await Order.findOne({ taskId });
     return order;
@@ -141,10 +117,7 @@ export const getOrderById = async (taskId: string): Promise<IOrder | null> => {
   }
 };
 
-export const updateOrderStatus = async (
-  taskId: string,
-  status: IOrder["status"]
-): Promise<IOrder | null> => {
+export const updateOrderStatus = async (taskId, status) => {
   try {
     const updatedOrder = await Order.findOneAndUpdate(
       { taskId },
@@ -174,10 +147,7 @@ export const updateOrderStatus = async (
   }
 };
 
-export const updateOrderLocation = async (
-  taskId: string,
-  location: IOrder["location"]
-): Promise<IOrder | null> => {
+export const updateOrderLocation = async (taskId, location) => {
   console.log(`Updating location for order ${taskId} to`, location);
   try {
     const updatedOrder = await Order.findOneAndUpdate(

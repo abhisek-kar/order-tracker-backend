@@ -1,23 +1,18 @@
 import { Worker, Job } from "bullmq";
-import emailService from "../services/emailService";
-import logger from "../utils/logger";
-import { redisClient, initializeRedis } from "../config/redisConfig";
+import emailService from "../services/emailService.js";
+import logger from "../utils/logger.js";
+import { redisClient, initializeRedis } from "../config/redisConfig.js";
 
-interface EmailJobData {
-  type: "orderEmail";
-  to: string;
-  context: any;
-  isConfirmation: boolean;
-}
 
-export let emailWorker: Worker;
+
+export let emailWorker;
 
 export function initializeEmailWorker() {
   if (!redisClient) initializeRedis();
 
   emailWorker = new Worker(
     "emailQueue",
-    async (job: Job<EmailJobData>) => {
+    async (job) => {
       logger.info(`Processing email job ${job.id} of type ${job.data.type}`);
 
       try {

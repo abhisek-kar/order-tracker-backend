@@ -1,18 +1,12 @@
 {
   "name": "order-tracker-backend",
   "version": "1.0.0",
-  "main": "./dist/server.js",
+  "type": "module",
+  "main": "./src/server.js",
   "scripts": {
-    "build": "tsc && npm run copy-views",
-    "build:dev": "tsc",
-    "start": "node dist/server.js",
-    "dev": "tsx watch src/server.ts",
-    "copy-views": "mkdir -p dist/views && cp -r src/views/* dist/views/ 2>/dev/null || true",
-    "clean": "rm -rf dist",
-    "docker:build": "docker build -t order-tracker-backend .",
-    "docker:run": "docker run -p 5000:5000 --env-file .env order-tracker-backend",
-    "docker:dev": "docker-compose up --build",
-    "docker:cloud": "docker-compose -f docker-compose.cloud.yml up --build"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "copy-views": "mkdir -p views && cp -r src/views/* views/ 2>/dev/null || true"
   },
   "repository": {
     "type": "git",
@@ -46,24 +40,9 @@
     "zod-validation-error": "^4.0.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/mongoose": "^5.11.96",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^24.3.0",
-    "@types/nodemailer": "^6.4.18",
-    "@types/nodemailer-express-handlebars": "^4.0.5",
-    "@types/socket.io": "^3.0.1",
-    "@types/uuid": "^10.0.0",
-    "nodemon": "^3.1.10",
-    "tsc-alias": "^1.8.16",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.4",
-    "typescript": "^5.9.2"
+    "nodemon": "^3.1.10"
   },
   "engines": {
-    "node": "24.1.0"
+    "node": "18.x"
   }
 }

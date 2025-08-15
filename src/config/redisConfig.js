@@ -1,10 +1,10 @@
 import { Redis } from "ioredis";
-import appEnv from "./env";
-import logger from "../utils/logger";
+import appEnv from "./env.js";
+import logger from "../utils/logger.js";
 
-export let redisClient: any;
+let redisClient;
 
-export function initializeRedis() {
+function initializeRedis() {
   if (!redisClient) {
     redisClient = new Redis({
       host: appEnv.REDIS_HOST,
@@ -20,18 +20,14 @@ export function initializeRedis() {
       logger.info("Redis connected successfully");
     });
 
-    redisClient.on("error", (err: any) => {
+    redisClient.on("error", (err) => {
       logger.error("Redis connection error:", err);
     });
   }
   return redisClient;
 }
 
-export async function getOrSetCache(
-  key: string,
-  fetchFn: () => Promise<any>,
-  ttl = 3600
-) {
+async function getOrSetCache(key, fetchFn, ttl = 3600) {
   const client = initializeRedis();
   const cached = await client.get(key);
   if (cached) {
@@ -43,14 +39,22 @@ export async function getOrSetCache(
   return freshData;
 }
 
-export async function invalidateCache(key: string) {
+async function invalidateCache(key) {
   if (!redisClient) initializeRedis();
   await redisClient.del(key);
   logger.info(`Cache invalidated for key: ${key}`);
 }
 
-export async function clearRedis() {
+async function clearRedis() {
   if (!redisClient) initializeRedis();
   await redisClient.flushall();
   logger.info("All Redis cache cleared");
 }
+
+export {
+  redisClient,
+  initializeRedis,
+  getOrSetCache,
+  invalidateCache,
+  clearRedis,
+};

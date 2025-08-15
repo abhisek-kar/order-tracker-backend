@@ -1,7 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { IOrder } from "../interfaces/IOrder";
 
-const OrderSchema: Schema = new Schema(
+const OrderSchema = new Schema(
   {
     taskId: { type: String, required: true, unique: true },
     customerInfo: {
@@ -41,6 +40,6 @@ const OrderSchema: Schema = new Schema(
   }
 );
 
-const Order: Model<IOrder> = mongoose.model<IOrder>("Order", OrderSchema);
+const Order = mongoose.model("Order", OrderSchema);
 
 export default Order;

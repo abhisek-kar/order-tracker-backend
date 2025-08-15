@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
-import connectDB from "./config/dbConfig";
-import User from "./models/User";
-import appEnv from "./config/env";
-import logger from "./utils/logger";
+import User from "./models/User.js";
+import appEnv from "./config/env.js";
+import logger from "./utils/logger.js";
 
 dotenv.config();
 

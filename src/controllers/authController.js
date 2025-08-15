@@ -1,11 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import { login as loginService } from "../services/authService";
+import { login as loginService } from "../services/authService.js";
 
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 

@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
-import logger from "../utils/logger";
-import appEnv from "./env";
+import logger from "../utils/logger.js";
+import appEnv from "./env.js";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
 

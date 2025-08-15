@@ -1,10 +1,9 @@
-import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import appEnv from "../config/env";
+import appEnv from "../config/env.js";
 
 export const auth =
-  (...roles: Array<"admin" | "agent" | "customer">) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (...roles) =>
+  (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -17,14 +16,8 @@ export const auth =
       if (!appEnv.JWT_SECRET) {
         next(new Error("Failed to authenticate user"));
       }
-      const decoded = jwt.verify(
-        token,
-        appEnv.JWT_SECRET as string
-      ) as unknown as {
-        id: string;
-        role: string;
-      };
-      req.user = { id: decoded.id, role: decoded.role as any };
+      const decoded = jwt.verify(token, appEnv.JWT_SECRET);
+      req.user = { id: decoded.id, role: decoded.role };
 
       if (roles.length && !roles.includes(req.user.role)) {
         return res.status(403).json({ message: "Access denied" });

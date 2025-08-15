@@ -1,8 +1,0 @@
-{
-  "resolveFullPaths": true,
-  "verbose": false,
-  "baseUrl": ".",
-  "paths": {
-    "@/*": ["./src/*"]
-  }
-}

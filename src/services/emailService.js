@@ -1,35 +1,9 @@
-import { SendMailOptions } from "nodemailer";
-import transporter from "../config/emailConfig";
-import logger from "../utils/logger";
-import appEnv from "../config/env";
-
-interface EmailContext {
-  name: string;
-  orderId: string;
-  status: string;
-  deliveryItem?: string;
-  preferredTime?: string;
-  customerPhone?: string;
-  deliveryAddress?: string;
-  location?: {
-    address: string;
-    latitude?: number;
-    longitude?: number;
-  };
-  [key: string]: any;
-}
-
-interface HandlebarsMailOptions extends SendMailOptions {
-  template: string;
-  context: any;
-}
+import transporter from "../config/emailConfig.js";
+import logger from "../utils/logger.js";
+import appEnv from "../config/env.js";
 
 class EmailService {
-  public async sendOrderEmail(
-    to: string,
-    context: EmailContext,
-    isConfirmation: boolean = false
-  ) {
+  async sendOrderEmail(to, context, isConfirmation = false) {
     const emailContext = {
       ...context,
       emailTitle: isConfirmation ? "Order Confirmation" : "Order Status Update",
@@ -50,8 +24,8 @@ class EmailService {
     });
   }
 
-  private getStatusClass(status: string): string {
-    const statusMap: { [key: string]: string } = {
+  getStatusClass(status) {
+    const statusMap = {
       Scheduled: "scheduled",
       "Reached Store": "reached-store",
       "Picked Up": "picked-up",
@@ -61,12 +35,12 @@ class EmailService {
     return statusMap[status] || "scheduled";
   }
 
-  private getStatusMessage(status: string, isConfirmation: boolean): string {
+  getStatusMessage(status, isConfirmation) {
     if (isConfirmation) {
       return "Your order has been scheduled and we're preparing it for delivery. We'll keep you updated as your order progresses.";
     }
 
-    const messageMap: { [key: string]: string } = {
+    const messageMap = {
       Scheduled:
         "Your order has been scheduled and we're preparing it for delivery.",
       "Reached Store":
@@ -79,17 +53,7 @@ class EmailService {
     return messageMap[status] || "Your order status has been updated.";
   }
 
-  private async sendEmail({
-    to,
-    subject,
-    template,
-    context,
-  }: {
-    to: string;
-    subject: string;
-    template: string;
-    context: any;
-  }) {
+  async sendEmail({ to, subject, template, context }) {
     try {
       await transporter.sendMail({
         from: appEnv.EMAIL_FROM,
@@ -97,7 +61,7 @@ class EmailService {
         subject,
         template,
         context,
-      } as HandlebarsMailOptions);
+      });
 
       logger.info(`Email sent to ${to} using template ${template}`);
     } catch (error) {
