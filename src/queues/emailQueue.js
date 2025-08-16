@@ -1,8 +1,8 @@
 import { Queue } from "bullmq";
-import { redisClient } from "../config/redisConfig.js";
+import { redisConnectionConfig } from "../config/bullmqConfig.js";
 
 export const emailQueue = new Queue("emailQueue", {
-  connection: redisClient,
+  connection: redisConnectionConfig,
 });
 
 export async function addOrderEmail(to, context, isConfirmation = false) {

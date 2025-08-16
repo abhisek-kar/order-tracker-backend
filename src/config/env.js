@@ -29,6 +29,7 @@ const envSchema = z.object({
   REDIS_URI: z.string().default("redis://localhost:6379"),
   REDIS_HOST: z.string().default("127.0.0.1"),
   REDIS_PORT: z.string().default("6379"),
+  REDIS_PASSWORD: z.string().min(6).optional(),
 
   AGENT_EMAIL: z.string().email({ message: "Invalid agent email" }).optional(),
   AGENT_PASSWORD: z

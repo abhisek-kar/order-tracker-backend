@@ -1,15 +1,11 @@
 import { Worker, Job } from "bullmq";
 import emailService from "../services/emailService.js";
 import logger from "../utils/logger.js";
-import { redisClient, initializeRedis } from "../config/redisConfig.js";
-
-
+import { redisConnectionConfig } from "../config/bullmqConfig.js";
 
 export let emailWorker;
 
 export function initializeEmailWorker() {
-  if (!redisClient) initializeRedis();
-
   emailWorker = new Worker(
     "emailQueue",
     async (job) => {
@@ -27,7 +23,7 @@ export function initializeEmailWorker() {
       }
     },
     {
-      connection: redisClient,
+      connection: redisConnectionConfig,
       concurrency: 5,
     }
   );
