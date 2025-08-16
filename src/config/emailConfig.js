@@ -15,19 +15,19 @@ const transporter = nodemailer.createTransport({
   logger: false,
 });
 
-// transporter.use(
-//   "compile",
-//   hbs({
-//     viewEngine: {
-//       extname: ".hbs",
-//       layoutsDir: path.resolve("./src/views/email"),
-//       defaultLayout: false,
-//       partialsDir: path.resolve("./src/views/email/partials"),
-//     },
-//     viewPath: path.resolve("./src/views/email"),
-//     extName: ".hbs",
-//   })
-// );
+transporter.use(
+  "compile",
+  hbs({
+    viewEngine: {
+      extname: ".hbs",
+      layoutsDir: path.resolve("./src/views/email"),
+      defaultLayout: false,
+      partialsDir: path.resolve("./src/views/email/partials"),
+    },
+    viewPath: path.resolve("./src/views/email"),
+    extName: ".hbs",
+  })
+);
 
 transporter.verify((error, success) => {
   if (error) {
